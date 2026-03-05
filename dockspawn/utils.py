@@ -11,10 +11,10 @@ TOKEN_REGEX = re.compile(r'http://127\.0\.0\.1:(\d+)(\S*\?token=[a-zA-Z0-9]+)')
 def get_run_dir(run_name: str) -> Path:
     """
     Resolve the run directory for a given run_name.
-    It resolves to ~/.accelerator/runs/<run_name>/
+    It resolves to ~/.dockspawn/runs/<run_name>/
     """
     home = Path.home()
-    return home / ".accelerator" / "runs" / run_name
+    return home / ".dockspawn" / "runs" / run_name
 
 def run_command(cmd: list, cwd: Path = None, capture_output: bool = False, check: bool = True):
     """

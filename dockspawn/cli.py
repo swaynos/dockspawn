@@ -33,7 +33,7 @@ def cmd_gen(args):
         host_port=host_port,
         container_port=8888,
         gpu_config=gpu_config,
-        bind_ip="127.0.0.1",
+        bind_ip=args.bind_ip,
         workspace_dir=args.workspace or str(Path.home())
     )
     
@@ -113,8 +113,10 @@ def cmd_start(args):
     if url:
         # The URL extracted from logs might have container port 8888. Replace it with host_port.
         import re
-        # Pattern captures port into group 1, remainder into group 2
-        final_url = re.sub(r'(http://127\.0\.0\.1:)(\d+)(/.*)', rf'\g<1>{host_port}\g<3>', url)
+        # We need to consider what bind IP was specified; if it's 0.0.0.0 we should log the machine's IP, 
+        # but to keep it simple, we'll log the host port and the bind IP we supplied.
+        bind_ip_str = args.bind_ip if args.bind_ip != "0.0.0.0" else "0.0.0.0"
+        final_url = re.sub(r'(http://127\.0\.0\.1:)(\d+)(/.*)', rf'http://{bind_ip_str}:{host_port}\g<3>', url)
         print("\nEnvironment ready")
         print(final_url)
     else:
@@ -130,6 +132,7 @@ def main():
     parser_gen.add_argument("name", help="Name of the run")
     parser_gen.add_argument("--gpu", default="all", help="GPU config (e.g. 'all', '0', '0,1')")
     parser_gen.add_argument("--port", type=int, default=8888, help="Starting port to search for available host port")
+    parser_gen.add_argument("--bind-ip", default="127.0.0.1", help="IP address to bind the host port to (default: 127.0.0.1)")
     parser_gen.add_argument("--workspace", help="Workspace directory to mount (default: $HOME)")
     parser_gen.add_argument("--force", action="store_true", help="Overwrite existing run directory if it exists")
     
@@ -151,6 +154,7 @@ def main():
     parser_start.add_argument("name", help="Name of the run (default: default)", nargs="?", default="default")
     parser_start.add_argument("--gpu", default="all", help="GPU config (e.g. 'all', '0', '0,1')")
     parser_start.add_argument("--port", type=int, default=8888, help="Starting port to search for available host port")
+    parser_start.add_argument("--bind-ip", default="127.0.0.1", help="IP address to bind the host port to (default: 127.0.0.1)")
     parser_start.add_argument("--workspace", help="Workspace directory to mount (default: $HOME)")
 
     args = parser.parse_args()

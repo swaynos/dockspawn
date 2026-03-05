@@ -36,12 +36,13 @@ Example output:
 
 - Container: 8888
 - Host: first available starting at 8888
-- Bind address: 127.0.0.1
+- Bind address: 127.0.0.1 (use `--bind-ip 0.0.0.0` for external network access)
 
 ### Workspace
 
 - Mount: $HOME -> /home/host
 - Jupyter starts in: /home/host
+- Run config lives in: `~/.dockspawn/runs/<name>`
 
 ### GPU
 
@@ -52,6 +53,10 @@ Restrict GPU usage:
   dockspawn start --gpu 0
   dockspawn start --gpu 1
   dockspawn start --gpu 0,1
+
+Allow external subnet access:
+
+  dockspawn start --bind-ip 0.0.0.0
 
 ## Commands
 

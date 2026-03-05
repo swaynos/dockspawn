@@ -23,7 +23,7 @@ def generate_run_directory(
     workspace_dir: str = None
 ):
     """
-    Creates the .accelerator/runs/<name>/ directory and writes out:
+    Creates the .dockspawn/runs/<name>/ directory and writes out:
     - docker-compose.yml (interpolated)
     - .env
     - run.json (metadata)
