@@ -19,16 +19,26 @@ dockspawn generates Docker Compose configurations and can optionally run them fo
 - Docker Compose
 - NVIDIA Container Toolkit (for GPU support)
 
-## Quick Start
+## Setup and Quick Start
 
-Start a new environment:
+1. **Install the package locally**:
 
-  dockspawn start
+   ```bash
+   pip install .
+   ```
+   *(Tip: Use `pip install -e .` if you plan on modifying the code.)*
 
-Example output:
+2. **Start a new environment**:
 
-  Environment ready
-  http://127.0.0.1:8889/lab?token=<token>
+   ```bash
+   dockspawn start
+   ```
+
+   **Example output:**
+   ```text
+   Environment ready
+   http://127.0.0.1:8888/lab?token=<token>
+   ```
 
 ## Defaults
 
