@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  jupyter:
+    image: jupyter/datascience-notebook:latest
+    container_name: dockspawn-{DOCKSPAWN_RUN_NAME}
+    ports:
+      - "{DOCKSPAWN_BIND_IP}:{DOCKSPAWN_HOST_PORT}:{DOCKSPAWN_CONTAINER_PORT}"
+    volumes:
+      - "{DOCKSPAWN_WORKSPACE}:/home/host:rw"
+    working_dir: /home/host
+    environment:
+      # Start lab directly without wrapper
+      - JUPYTER_ENABLE_LAB=yes
+      - GRANT_SUDO=yes
+    user: root
+    restart: unless-stopped
+{GPU_SECTION}

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dockspawn"
+version = "0.1.0"
+description = "Spin up disposable GPU-accelerated JupyterLab environments locally using Docker Compose."
+authors = [
+    {name = "dockspawn authors"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+dockspawn = "dockspawn.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["dockspawn", "dockspawn.*", "templates"]
+
+[tool.setuptools.package-data]
+templates = ["*.yml", "*.yaml"]
