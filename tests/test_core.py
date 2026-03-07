@@ -20,6 +20,14 @@ class TestUtils(unittest.TestCase):
         url = extract_jupyter_url(logs)
         self.assertEqual(url, "http://127.0.0.1:8888/lab?token=abcde12345")
 
+    def test_extract_jupyter_url_uses_latest_token(self):
+        logs = """
+[I 2024-03-04 12:00:00.000 ServerApp] http://127.0.0.1:8888/lab?token=oldtoken123
+[I 2024-03-04 20:00:00.000 ServerApp] http://127.0.0.1:8888/lab?token=newtoken456
+        """
+        url = extract_jupyter_url(logs)
+        self.assertEqual(url, "http://127.0.0.1:8888/lab?token=newtoken456")
+
 class TestGpu(unittest.TestCase):
     def test_parse_gpu_config(self):
         self.assertEqual(parse_gpu_config(""), "all")

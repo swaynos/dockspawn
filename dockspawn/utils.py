@@ -6,7 +6,7 @@ from pathlib import Path
 
 # Extract URL pattern like http://127.0.0.1:8889/lab?token=some_token
 # or http://127.0.0.1:8889/?token=some_token
-TOKEN_REGEX = re.compile(r'http://127\.0\.0\.1:(\d+)(\S*\?token=[a-zA-Z0-9]+)')
+TOKEN_REGEX = re.compile(r"http://127\.0\.0\.1:(\d+)(\S*\?token=[^&\s]+)")
 
 def get_run_dir(run_name: str) -> Path:
     """
@@ -38,14 +38,13 @@ def run_command(cmd: list, cwd: Path = None, capture_output: bool = False, check
 
 def extract_jupyter_url(logs: str) -> str:
     """
-    Given docker compose logs, extract the first usable Jupyter URL.
+    Given docker compose logs, extract the latest usable Jupyter URL.
     Returns None if no token is found.
     """
+    latest_url = None
     for line in logs.splitlines():
         match = TOKEN_REGEX.search(line)
         if match:
-            # We matched the URL! Note that the port in the logs might be 8888 (the container port).
-            # The CLI up command needs to substitute the real host port, so returning the match object or raw token might be safer if we let the CLI format it.
-            # But let's just return what matched first for simplicity, the CLI wrapper can format the final URL.
-            return match.group(0)
-    return None
+            # Keep the last token URL seen so restarts don't return stale credentials.
+            latest_url = match.group(0)
+    return latest_url
