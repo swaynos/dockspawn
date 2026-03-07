@@ -113,9 +113,12 @@ def cmd_start(args):
     if url:
         # The URL extracted from logs might have container port 8888. Replace it with host_port.
         import re
-        # We need to consider what bind IP was specified; if it's 0.0.0.0 we should log the machine's IP, 
-        # but to keep it simple, we'll log the host port and the bind IP we supplied.
-        bind_ip_str = args.bind_ip if args.bind_ip != "0.0.0.0" else "0.0.0.0"
+        import socket
+        # If bind IP is 0.0.0.0, we log the machine's hostname so it can be accessed from other machines.
+        if args.bind_ip == "0.0.0.0":
+            bind_ip_str = socket.gethostname()
+        else:
+            bind_ip_str = args.bind_ip
         final_url = re.sub(r'(http://127\.0\.0\.1:)(\d+)(/.*)', rf'http://{bind_ip_str}:{host_port}\g<3>', url)
         print("\nEnvironment ready")
         print(final_url)
