@@ -141,15 +141,15 @@ def main():
     
     # up
     parser_up = subparsers.add_parser("up", help="Start a generated run")
-    parser_up.add_argument("name", help="Name of the run")
+    parser_up.add_argument("name", help="Name of the run (default: default)", nargs="?", default="default")
     
     # down
-    parser_down = subparsers.add_parser("down", help="Stop a run")
-    parser_down.add_argument("name", help="Name of the run")
+    parser_down = subparsers.add_parser("down", help="Stop a run", aliases=["stop"])
+    parser_down.add_argument("name", help="Name of the run (default: default)", nargs="?", default="default")
     
     # logs
     parser_logs = subparsers.add_parser("logs", help="View logs for a run")
-    parser_logs.add_argument("name", help="Name of the run")
+    parser_logs.add_argument("name", help="Name of the run (default: default)", nargs="?", default="default")
     parser_logs.add_argument("-f", action="store_true", help="Follow log output")
 
     # start
@@ -166,7 +166,7 @@ def main():
         cmd_gen(args)
     elif args.command == "up":
         cmd_up(args)
-    elif args.command == "down":
+    elif args.command in {"down", "stop"}:
         cmd_down(args)
     elif args.command == "logs":
         cmd_logs(args)
