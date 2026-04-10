@@ -108,11 +108,11 @@ README.md
 
 Each run creates a directory:
 
-  .accelerator/runs/<name>/
+  ~/.dockspawn/runs/<name>/
 
 Example:
 
-  .accelerator/runs/lab-123/
+  ~/.dockspawn/runs/lab-123/
     docker-compose.yml
     .env
     run.json

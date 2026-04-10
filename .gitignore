@@ -61,7 +61,7 @@ env.bak/
 venv.bak/
 
 # Run directories
-.accelerator/
+.dockspawn/
 
 # IDEs
 .idea/
