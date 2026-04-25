@@ -84,4 +84,4 @@ It does not replace Docker or Docker Compose. It generates straightforward Compo
 
 ## License
 
-MIT
+GPL-3.0 
