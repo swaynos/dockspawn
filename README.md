@@ -59,15 +59,15 @@ dockspawn generates Docker Compose configurations and can optionally run them fo
 Default: all GPUs
 
 Restrict GPU usage:
-
+```
   dockspawn start --gpu 0
   
   dockspawn start --gpu 1
-
+```
 Allow external subnet access:
-
+```
   dockspawn start --bind-ip 0.0.0.0
-
+```
 ## Commands
 
 - dockspawn gen   Generate compose files for a run
