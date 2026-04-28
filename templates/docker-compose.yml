@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   jupyter:
-    image: jupyter/datascience-notebook:latest
+    image: tensorflow/tensorflow:2.16.2-gpu-jupyter
     container_name: dockspawn-{DOCKSPAWN_RUN_NAME}
     ports:
       - "{DOCKSPAWN_BIND_IP}:{DOCKSPAWN_HOST_PORT}:{DOCKSPAWN_CONTAINER_PORT}"
@@ -10,9 +10,7 @@ services:
       - "{DOCKSPAWN_WORKSPACE}:/home/host:rw"
     working_dir: /home/host
     environment:
-      # Start lab directly without wrapper
-      - JUPYTER_ENABLE_LAB=yes
-      - GRANT_SUDO=yes
-    user: root
+      - NVIDIA_VISIBLE_DEVICES=${{DOCKSPAWN_GPU_DEVICES:-all}}
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     restart: unless-stopped
 {GPU_SECTION}
