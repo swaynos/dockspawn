@@ -61,8 +61,8 @@ Default: all GPUs
 Restrict GPU usage:
 
   dockspawn start --gpu 0
+  
   dockspawn start --gpu 1
-  dockspawn start --gpu 0,1
 
 Allow external subnet access:
 
